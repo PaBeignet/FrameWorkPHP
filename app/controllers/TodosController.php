@@ -3,6 +3,7 @@ namespace controllers;
 use Ubiquity\attributes\items\router\Get;
 use Ubiquity\attributes\items\router\Route;
 use Ubiquity\attributes\items\router\Post;
+use Ubiquity\utils\http\URequest;
 use Ubiquity\utils\http\USession;
 
 /**
@@ -14,6 +15,23 @@ class TodosController extends \controllers\ControllerBase{
     const EMPTY_LIST_ID='not saved';
     const LIST_SESSION_KEY='list';
     const ACTIVE_LIST_SESSION_KEY='active-list';
+
+    protected $headerView = "@activeTheme/main/vHeader.html";
+    protected $menuView = "@activeTheme/main/vMenu.html";
+    protected $footerView = "@activeTheme/main/vFooter.html";
+
+    public function initialize() {
+        if (! URequest::isAjax()) {
+            $this->loadView($this->headerView);
+            $this->loadView($this->menuView);
+        }
+    }
+    public function finalize() {
+        if (! URequest::isAjax()) {
+            $this->loadView($this->footerView);
+        }
+    }
+
 
     #[Route(path: "/_default",name: "home")]
 	public function index(){
@@ -28,7 +46,7 @@ class TodosController extends \controllers\ControllerBase{
 
 	#[Post(path: "Todos/add",name: "todos.addElement")]
 	public function addElement(){
-		
+		$val = URequest::post('value');
 	}
 
 
@@ -59,17 +77,37 @@ class TodosController extends \controllers\ControllerBase{
 	#[Get(path: "Todos/new/{force}",name: "todos.newlist")]
 	public function newlist($force=False){
 		if(!$force){
-            echo "La liste existe déjà et n'est pas vide";
+            $this->showMessage("Création de Liste", "La liste existe déjà");
         }
         else{
-            echo "On créer la liste en Session";
+            USession::set("list", []);
+            $list=USession::get('list', []);
+            if(sizeof($list) > 0){
+                $this->showMessage("Création de Liste", "Votre liste est créée");
+                $this->displayList($list);
+            }
+            else{
+                $this->showMessage("Création de Liste", "Votre liste est vide");
+            }
+
         }
 	}
-
 
 	#[Get(path: "Todos/save",name: "todos.saveList")]
 	public function saveList(){
 		
 	}
+
+    public function showMessage(string $header, string $message, string $type = '', string $icon = 'info circle',array $buttons=[]) {
+        $this->loadDefaultView(compact('header', 'type', 'icon', 'message','buttons'));
+    }
+
+    public function displayList(array $list) {
+        echo "<h3>Début Liste :</h3>";
+        foreach ($list as $i){
+            echo $i;
+        }
+        echo "<h3>Fin Liste :</h3>";
+    }
 
 }
