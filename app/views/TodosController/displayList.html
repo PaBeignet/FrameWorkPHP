@@ -1,1 +1,21 @@
 <!--View associated to displayList action of TodosController controller -->
+<div class="ui icon error inverted message">
+    <i class="ol list icon"></i>
+    <div class="content">
+        <div class="header">
+            Affichage Liste :
+        </div>
+        {% for i in list %}
+            <li>{{i}}</li>
+        {% endfor %}
+        </div>
+</div>
+<div class="ui icon error inverted message">
+    <div class="item">
+    <form class="ui inline inverted form" action="Todos/add" method="post">
+        <h3>Ajouter un élément : </h3>
+        <input type="text" id="val" name="val" placeholder="Bidule"/></br></br>
+        <button class="ui mini inverted button" type="submit">Ajouter</button>
+    </form>
+    </div>
+</div>

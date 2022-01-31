@@ -20,6 +20,7 @@ class TodosController extends \controllers\ControllerBase{
     protected $menuView = "@activeTheme/main/vMenu.html";
     protected $footerView = "@activeTheme/main/vFooter.html";
 
+
     public function initialize() {
         if (! URequest::isAjax()) {
             $this->loadView($this->headerView);
@@ -36,17 +37,22 @@ class TodosController extends \controllers\ControllerBase{
     #[Route(path: "/_default",name: "home")]
 	public function index(){
 		if(USession::exists(self::ACTIVE_LIST_SESSION_KEY)){
-            $list=USession::get('list', []);
-            $this->loadDefaultView(compact('list'));
+            $list=USession::get(self::ACTIVE_LIST_SESSION_KEY, []);
+            $header='Affichage de la liste :';
+            $this->displayList($list);
         }
         else{
-            echo "Liste non Trouvée";
+            $this->showMessage("Liste", "Liste introuvable",'','info circle ',[['style'=>'green inverted', 'value'=>'Nouvelle Liste']]);
         }
 	}
 
 	#[Post(path: "Todos/add",name: "todos.addElement")]
 	public function addElement(){
-		$val = URequest::post('value');
+		$val = URequest::post('val');
+        $list = USession::get(self::ACTIVE_LIST_SESSION_KEY, []);
+        $list[] = $val;
+        $list=USession::set(self::ACTIVE_LIST_SESSION_KEY,$list);
+        $this->displayList($list);
 	}
 
 
@@ -81,13 +87,14 @@ class TodosController extends \controllers\ControllerBase{
         }
         else{
             USession::set("list", []);
-            $list=USession::get('list', []);
+            $list=USession::get(self::ACTIVE_LIST_SESSION_KEY, []);
             if(sizeof($list) > 0){
                 $this->showMessage("Création de Liste", "Votre liste est créée");
                 $this->displayList($list);
             }
             else{
                 $this->showMessage("Création de Liste", "Votre liste est vide");
+                $this->loadView('TodosController/newlist.html');
             }
 
         }
@@ -98,16 +105,12 @@ class TodosController extends \controllers\ControllerBase{
 		
 	}
 
-    public function showMessage(string $header, string $message, string $type = '', string $icon = 'info circle',array $buttons=[]) {
-        $this->loadDefaultView(compact('header', 'type', 'icon', 'message','buttons'));
+    public function showMessage(string $header, string $message, string $type = '', string $icon = 'info circle ',array $buttons=[]) {
+        $this->loadView('TodosController/showMessage.html',compact('header', 'type', 'icon', 'message','buttons'));
     }
 
     public function displayList(array $list) {
-        echo "<h3>Début Liste :</h3>";
-        foreach ($list as $i){
-            echo $i;
-        }
-        echo "<h3>Fin Liste :</h3>";
+        $this->loadView('TodosController/displayList.html', compact('list'));
     }
 
 }
