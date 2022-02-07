@@ -1,17 +1,4 @@
 <!--View associated to index action of TodosController controller -->
 <div class="ui icon error inverted message">
     <i class="{{icon}} icon"></i>
-    <div class="content">
-        <div class="header">
-            {{header}}
-        </div>
-        {% for i in list %}
-            <li>{{i}}</li>
-        {% endfor %}
-    </div>
-    <form action="Todos/add" method="post">
-        <label>Ajouter un élément : </label>
-        <input type="text" id="val" name="val" placeholder="Bidule"/>
-        <button type="submit">Ajouter</button>
-    </form>
 </div>

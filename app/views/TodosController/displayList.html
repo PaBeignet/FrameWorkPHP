@@ -5,10 +5,36 @@
         <div class="header">
             Affichage Liste :
         </div>
+
+        <div class="ui inverted relaxed divided list">
+
         {% for i in list %}
-            <li>{{i}}</li>
+
+            <div class="item">
+                <form style="" class="ui inverted left floated form" action="Todos/edit/{{loop.index0}}/" method="post">
+                    <div class="ui inverted mini input">
+                        <input type="text" name="element" value="{{i}}">
+                    </div>
+                </form>
+                <div class="ui inverted checkbox" style="display: none;">
+                    <input type="checkbox" name="example" id="ck{{loop.index0}}">
+                    <label class="_element" for="ck{{loop.index0}}" data-index="{{loop.index0}}">{{i}}</label>
+                </div>
+
+                <a href="Todos/delete/{{loop.index0}}/">
+                    <span class="ui circular mini icon inverted red button right floated">
+                        <i class="ui times icon"></i>
+                    </span>
+                </a>
+                <span class="ui circular mini icon inverted button right floated _toEdit">
+                    <i class="ui edit icon"></i>
+                </span>
+            </div>
+
         {% endfor %}
+
         </div>
+    </div>
 </div>
 <div class="ui icon error inverted message">
     <div class="item">

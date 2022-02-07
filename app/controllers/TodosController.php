@@ -38,7 +38,6 @@ class TodosController extends \controllers\ControllerBase{
 	public function index(){
 		if(USession::exists(self::ACTIVE_LIST_SESSION_KEY)){
             $list=USession::get(self::ACTIVE_LIST_SESSION_KEY, []);
-            $header='Affichage de la liste :';
             $this->displayList($list);
         }
         else{
@@ -58,13 +57,23 @@ class TodosController extends \controllers\ControllerBase{
 
 	#[Get(path: "Todos/delete/{index}",name: "todos.deleteElement")]
 	public function deleteElement($index){
-		
+        if(USession::exists(self::ACTIVE_LIST_SESSION_KEY)){
+            $list=USession::get(self::ACTIVE_LIST_SESSION_KEY, []);
+            unset($list[$index]);
+            $list = USession::set(self::ACTIVE_LIST_SESSION_KEY,array_values($list));
+            $this->displayList($list);
+        }
 	}
 
 
 	#[Post(path: "Todos/edit/{index}",name: "todos.editElement")]
 	public function editElement($index){
-		
+        if(USession::exists(self::ACTIVE_LIST_SESSION_KEY)){
+            $list=USession::get(self::ACTIVE_LIST_SESSION_KEY, []);
+            $list[$index] = URequest::post('element');
+            $list = USession::set(self::ACTIVE_LIST_SESSION_KEY,array_values($list));
+            $this->displayList($list);
+        }
 	}
 
 

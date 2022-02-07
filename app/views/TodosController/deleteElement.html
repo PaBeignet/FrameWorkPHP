@@ -1,0 +1,32 @@
+<!--View associated to displayList action of TodosController controller -->
+<div class="ui icon error inverted message">
+    <i class="ol list icon"></i>
+    <div class="content">
+        <div class="header">
+            Affichage Liste :
+        </div>
+
+        <div class="ui inverted relaxed divided list">
+
+            {% for i in list %}
+
+            <div class="item">{{i}} <a href="Todos/delete/{{loop.index0}}">
+                <span class="ui circular mini icon inverted red button right floated">
+                    <i class="ui times icon"></i>
+                </span> </a>
+            </div>
+
+            {% endfor %}
+
+        </div>
+    </div>
+</div>
+<div class="ui icon error inverted message">
+    <div class="item">
+        <form class="ui inline inverted form" action="Todos/add" method="post">
+            <h3>Ajouter un élément : </h3>
+            <input type="text" id="val" name="val" placeholder="Bidule"/></br></br>
+            <button class="ui mini inverted button" type="submit">Ajouter</button>
+        </form>
+    </div>
+</div>
