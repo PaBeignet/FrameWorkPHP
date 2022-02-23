@@ -13,18 +13,23 @@
 <ul>
     <li>{{orga.name}}</li>
 </ul>
-<h3>Utilisateurs :</h3>
-<ul>
-    {% for user in orga.users %}
-        <li>{{user}}</li>
-    {% endfor %}
-</ul>
+<div class="ui two column grid">
 
-<h3>Groupes :</h3>
-<ul>
-    {% for groupe in orga.groupes %}
-        <li>{{groupe}}</li>
-    {% endfor %}
-</ul>
-
+    <div class="column">
+        <h3>Utilisateurs :</h3>
+        <ul>
+            {% for user in orga.users %}
+            <li>{{user}}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="column">
+        <h3>Groupes :</h3>
+        <ul>
+            {% for groupe in orga.groupes %}
+            <li>{{groupe}}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
 {% endblock %}
