@@ -20,6 +20,17 @@ class User{
 	#[Validator(type: "id",constraints: ["autoinc"=>true])]
 	private $id;
 
+    public function getLogin()
+    {
+        return $this->login;
+    }
+
+    public function setLogin($login): void
+    {
+        $this->login = $login;
+    }
+
+    private $login;
 	
 	#[Column(name: "firstname",dbType: "varchar(65)")]
 	#[Validator(type: "length",constraints: ["max"=>65,"notNull"=>true])]
@@ -149,7 +160,7 @@ class User{
 
 
 	 public function __toString(){
-		return ($this->email??'no value').'';
+		return ($this->firstname??'no value').($this->lastname??'no value').'';
 	}
 
 }
