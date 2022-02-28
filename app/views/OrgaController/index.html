@@ -10,9 +10,17 @@
 {% endblock %}
 
 {% block body %}
-<ul>
     {% for orga in all %}
-        <li><a href="{{path('orga.getOne',[orga.id])}}">{{orga.name}}</a></li>
+        <div class="ui grid">
+            <div class="two column row">
+                <div class="left floated column">
+                    <a href="{{path('orga.getOne',[orga.id])}}">{{orga.name}}</a>
+                </div>
+                <div class="right floated column">
+                    <a href="{{path('orga.update',[orga.id])}}"><i class="edit icon"></i></a>
+                    <a href="{{path('orga.delete',[orga.id])}}"><i class="delete icon red"></i></a>
+                </div>
+            </div>
+        </div>
     {% endfor %}
-</ul>
 {% endblock %}

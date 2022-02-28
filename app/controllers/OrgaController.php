@@ -6,8 +6,9 @@ use Ubiquity\attributes\items\router\Post;
  use Ubiquity\attributes\items\router\Route;
  use Ubiquity\orm\DAO;
  use Ubiquity\orm\repositories\ViewRepository;
+use Ubiquity\utils\http\URequest;
 
- /**
+/**
   * Controller OrgaController
   */
  #[Route('orga')]
@@ -33,9 +34,42 @@ class OrgaController extends \controllers\ControllerBase{
 	}
 
 
-	#[Route(path: "/add",name: "orga.addOne")]
+	#[Get(path: "/add",name: "orga.addOne")]
 	public function addOne(){
         $this->loadView("OrgaController/addOne.html");
 	}
+
+     #[Post(path: "/add",name: "orga.addOne")]
+     public function addOnePost(){
+         $orga=new Organization();
+         URequest::setValuesToObject($orga);
+         if(DAO::insert($orga)){
+             $this->index();
+         }
+     }
+
+     #[Get(path: "/update/{idOrga}",name: "orga.update")]
+     public function update($idOrga){
+         $orga=$this->repo->byId($idOrga,['name', 'domain', 'aliases']);
+         $this->loadView("OrgaController/addOne.html");
+     }
+
+     #[Post(path: "/update/{idOrga}",name: "orga.update")]
+     public function updatePost($idOrga){
+         $orga=DAO::getById(Organization::class,$idOrga);
+         URequest::setValuesToObject($orga);
+         if(DAO::update($orga)){
+             $this->index();
+         }
+     }
+
+     #[Get(path: "/delete/{idOrga}",name: "orga.delete")]
+     public function delete($idOrga){
+         if(DAO::delete(Organization::class,$idOrga)){
+             $this->index();
+         }
+     }
+
+
 
 }
