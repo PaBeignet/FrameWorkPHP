@@ -93,8 +93,8 @@ class MyAuth extends \Ubiquity\controllers\auth\AuthController{
 
     protected function noAccessMessage(FlashMessage $fMessage)
     {
-        $fMessage->setContent("VOUS NE PASSEREZ PAAAAAAAAAAS (sauf si vous avez un compte UwU)");
         $fMessage->setTitle("Gandalf dit :");
+        $fMessage->setContent("VOUS NE PASSEREZ PAAAAAAAAAAS (sauf si vous avez un compte UwU)");
     }
 
     protected function terminateMessage(FlashMessage $fMessage)
