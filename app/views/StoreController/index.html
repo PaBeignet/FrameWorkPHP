@@ -1,0 +1,23 @@
+<!--View associated to index action of StoreController controller -->
+<div class="ui container">
+    <a href="{{ path('store.allProducts') }}" class="ui button positive">Parcourir le store ({{count}} produits)</a><br><br>
+
+            <div class="ui cards">
+    {% for section in sections %}
+
+        <div class="card">
+            <div class="content">
+                <div class="header">{{section.name}}</div>
+                <div class="description">
+                    {{section.description}}
+                </div>
+            </div>
+            <a href="{{path('store.section', [section.id])}}" class="ui bottom attached button">
+                <i class="add icon"></i>
+                Consulter produits ({{section.getProducts()|length}})
+            </a>
+        </div>
+    {%endfor%}
+        </div>
+
+</div>
