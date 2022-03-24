@@ -1,11 +1,11 @@
 <!--View associated to section action of StoreController controller -->
 <h1>{{title}}</h1>
-{{section.name}}
+{{subTitle}}
 <hr>
 
-<div class="ui cards">
+<div class="ui six cards">
 
-{% for product in section.products %}
+{% for product in trucAfficher %}
     <div class="ui card">
         <div class="image">
             {{img('store/' ~ product.getImage() ~ '.jpg')}}
