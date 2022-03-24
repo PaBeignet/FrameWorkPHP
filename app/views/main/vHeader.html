@@ -19,14 +19,17 @@
 			<div class="ui container">
 				<div class="ui secondary inverted menu">
 					<a href="/" class="active item">Home</a>
-					<div class="ui labeled button" tabindex="0">
-						<div class="ui red button">
-							<i class="cart icon"></i>
-							{{nbProduct}}
+
+					<div class="right menu">
+						<div class="ui labeled button" tabindex="0">
+							<div class="ui basic yellow button">
+								<i class="cart icon"></i>
+								{{nbProduct}}
+							</div>
+							<a class="ui basic orange left pointing label">
+								{{totalPrice}}
+							</a>
 						</div>
-						<a class="ui basic red left pointing label">
-							{{totalPrice}}
-						</a>
 					</div>
 				</div>
 
