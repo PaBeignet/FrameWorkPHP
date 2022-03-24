@@ -43,7 +43,8 @@ class StoreController extends \controllers\ControllerBase{
 	#[Route(path: "store/section/{idSection}",name: "store.section")]
 	public function section($idSection){
 		$section=DAO::getById(Section::class,$idSection, ['products']);
-		$this->loadView('StoreController/section.html', compact('section'));
+        $title = 'Section';
+		$this->loadView('StoreController/section.html', compact('section', 'title'));
 
 	}
 
@@ -79,6 +80,14 @@ class StoreController extends \controllers\ControllerBase{
         }
 
         UResponse::header('location', '/');
+	}
+
+
+	#[Route(path: "store/allProducts",name: "store.allProducts")]
+	public function allProducts(){
+        $products=DAO::getAll(Product::class);
+        $title='Tous les produits';
+		$this->loadView('StoreController/section.html', compact('products', 'title'));
 	}
 
 }
