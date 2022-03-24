@@ -3,6 +3,8 @@ namespace controllers;
  use models\Product;
  use models\Section;
  use Ubiquity\attributes\items\router\Route;
+ use Ubiquity\controllers\auth\AuthController;
+ use Ubiquity\controllers\auth\WithAuthTrait;
  use Ubiquity\orm\DAO;
  use Ubiquity\utils\http\UResponse;
  use Ubiquity\utils\http\USession;
@@ -12,6 +14,7 @@ namespace controllers;
   * Controller StoreController
   */
 class StoreController extends \controllers\ControllerBase{
+    use WithAuthTrait;
 
     public function initialize()
     {
@@ -95,4 +98,13 @@ class StoreController extends \controllers\ControllerBase{
 		$this->loadView('StoreController/section.html', compact('trucAfficher', 'title', 'subTitle'));
 	}
 
+    protected function getAuthController(): AuthController
+    {
+        return new StoreAuthController($this);
+    }
+
+    public function isValid($action)
+    {
+        return true;
+    }
 }

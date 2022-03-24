@@ -1,10 +1,10 @@
 <!--View associated to index action of StoreController controller -->
 <div class="ui container">
-    <a href="{{ path('store.allProducts') }}" class="ui button positive">Parcourir le store ({{count}} produits)</a><br><br>
+    <a href="{{ path('store.allProducts') }}" class="ui fluid button positive">Parcourir le store ({{count}} produits)</a>
+    <hr><br>
 
-            <div class="ui cards">
+    <div class="ui cards">
     {% for section in sections %}
-
         <div class="card">
             <div class="content">
                 <div class="header">{{section.name}}</div>
@@ -18,6 +18,5 @@
             </a>
         </div>
     {%endfor%}
-        </div>
-
+    </div>
 </div>
